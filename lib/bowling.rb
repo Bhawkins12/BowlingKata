@@ -21,9 +21,9 @@ end
 
   def score
     frame_index = 0
-    #roll_number = 0
+    roll_number = 0
   score = 0
-    (@rolls).each_index do |roll_number|
+    (@rolls).each do |i|
       if frame_10(frame_index)
         if last_frame_roll_is_strike(roll_number)
           if @rolls[roll_number+1]!=10 && roll_number < @rolls.length-2
@@ -33,29 +33,30 @@ end
           score += 10
           end
 
-          #roll_number += 1
+          roll_number += 1
         elsif last_frame_roll_is_spare(roll_number)
           score+= 10 + spare_bonus(roll_number)
-         # roll_number+=2
+          roll_number+=2
         else
-          score+=@rolls[roll_number]
+          score+=i
         end
 
       else
         if roll_is_strike(roll_number)
         score += 10 + strike_bonus(roll_number)
-        #roll_number += 1
+        roll_number += 1
         elsif roll_is_spare(roll_number)
         score += 10 + spare_bonus(roll_number)
+        roll_number += 2
         else
           score += sum_of_rolls_in_frame(roll_number)
-        #  roll_number +=2
+          roll_number +=2
         end
         frame_index +=1
 
 
       end
-      puts roll_number
+      
 
     end
     score
@@ -63,7 +64,7 @@ end
 
   def last_row_strike_bonus(frame_index)
      if @rolls[frame_index]<@rolls[@rolls.length-2]
-       @rolls[frame_index+1] + @rolls[frame_index+2]
+       @rolls[i+1] + @rolls[frame_index+2]
      end
   end
 
